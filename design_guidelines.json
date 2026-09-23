@@ -1,0 +1,179 @@
+{
+  "app_name": "Elaya",
+  "personality": "3 Editorial Mobile LIGHT",
+  "personality_one_liner": "A refined, editorial-driven floral marketplace that treats every bouquet like a piece of art.",
+  "color": {
+    "surface": "#FCFAF8",
+    "onSurface": "#2B2323",
+    "surfaceSecondary": "#F6EFEF",
+    "onSurfaceSecondary": "#3D3333",
+    "surfaceTertiary": "#EFE6E6",
+    "onSurfaceTertiary": "#4A4040",
+    "surfaceInverse": "#2B2323",
+    "onSurfaceInverse": "#FCFAF8",
+    "brand": "#7B3245",
+    "brandPrimary": "#7B3245",
+    "onBrandPrimary": "#FFFFFF",
+    "brandSecondary": "#C99B9A",
+    "onBrandSecondary": "#2B2323",
+    "brandTertiary": "#E6D5D5",
+    "onBrandTertiary": "#7B3245",
+    "success": "#4C7355",
+    "onSuccess": "#FFFFFF",
+    "warning": "#B87B41",
+    "onWarning": "#FFFFFF",
+    "error": "#A63A3A",
+    "onError": "#FFFFFF",
+    "info": "#607487",
+    "onInfo": "#FFFFFF",
+    "border": "#E6D5D5",
+    "borderStrong": "#C99B9A",
+    "divider": "#EFE6E6",
+    "muted": "#827777",
+    "onBrand": "#FFFFFF"
+  },
+  "typography": {
+    "displayFontFamily": "Cormorant Garamond",
+    "textFontFamily": "Geist",
+    "scale": {
+      "sm": 12,
+      "base": 14,
+      "lg": 16,
+      "xl": 20,
+      "2xl": 24
+    }
+  },
+  "spacing": {
+    "rule": "Generous magazine-like vertical breathing room. Minimal structural borders, prefer negative space for grouping.",
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "2xl": 32,
+    "3xl": 48
+  },
+  "radius_tokens": {
+    "sm": 0,
+    "md": 4,
+    "lg": 8,
+    "pill": 999
+  },
+  "shadow_tier": "0",
+  "navigation": "bottom_tabs",
+  "icon_set": "Phosphor",
+  "glassmorphism": {
+    "enabled": true,
+    "do's": [
+      "Use frosted glass on the bottom tab bar",
+      "Apply to sticky headers over scrolling floral imagery",
+      "Use as a backdrop for featured bouquet cards floating over botanical photos"
+    ],
+    "dont's": [
+      "Avoid on form inputs or dense admin list rows",
+      "Do not over-stack; max 2 glass surfaces per screen"
+    ]
+  },
+  "platform_libraries": {
+    "glass": {
+      "ios": "expo-glass-effect",
+      "android": "expo-blur",
+      "low_end_android_fallback": "solid surfaceSecondary"
+    },
+    "image": "expo-image",
+    "blur": "expo-blur",
+    "bottom_sheet": "@gorhom/bottom-sheet",
+    "animation": "react-native-reanimated",
+    "gesture": "react-native-gesture-handler"
+  },
+  "screens": [
+    {
+      "name": "Customer Home",
+      "purpose": "Immersive discovery of curated bouquets and local flower shops.",
+      "states": {
+        "loading": "Centered soft pulse of the brand mark.",
+        "empty": "Elegant line-art vase illustration: 'No fresh blooms found in this area.'",
+        "error": "Subtle text message with a clean retry button."
+      },
+      "layout": "Full-bleed hero image of a featured arrangement with a gradient-to-dark scrim. Horizontal scroll for 'Curated Collections'. Full-width editorial cards for 'Local Shops'. Typography drives hierarchy."
+    },
+    {
+      "name": "Bouquet Studio (3D)",
+      "purpose": "Custom interactive 3D arrangement studio using expo-gl/three.",
+      "states": {
+        "loading": "Skeleton UI around the 3D canvas with a 'Preparing your studio...' loader.",
+        "empty": "N/A - Defaults to a blank vase in the 3D scene.",
+        "error": "Fallback to 2D illustration if WebGL fails, with 'Unable to load 3D studio'."
+      },
+      "layout": "Screen split: Top 60% is full-bleed 3D canvas (expo-gl). Bottom 40% is a bottom-sheet style surface containing tabs for Flowers, Fillers, and Vases with horizontal selection lists. Sticky 'Add to Cart' button."
+    },
+    {
+      "name": "Order Tracking (Customer)",
+      "purpose": "Live Google Maps delivery tracking.",
+      "states": {
+        "loading": "Map skeleton loader.",
+        "empty": "N/A",
+        "error": "Error loading map message with retry option."
+      },
+      "layout": "Full-screen Google Map. Floating glassmorphic card at the top for status ('Out for Delivery'). Bottom sheet displaying driver details, ETA, and a primary CTA to contact the driver."
+    },
+    {
+      "name": "Flower Shop Owner Dashboard",
+      "purpose": "Manage inventory, incoming orders, and daily sales metrics.",
+      "states": {
+        "loading": "Staggered fade-in skeleton list.",
+        "empty": "'No orders yet today.' with a soft brand-tinted empty state illustration.",
+        "error": "Clean error banner at the top of the screen."
+      },
+      "layout": "Editorial but utilitarian. Top section features large typography metrics (e.g., '12 Pending Orders'). Below are segmented tabs (Orders, Inventory) leading into clean, borderless list rows."
+    },
+    {
+      "name": "Admin Overview",
+      "purpose": "High-level platform monitoring and moderation.",
+      "states": {
+        "loading": "Skeleton grids for metrics.",
+        "empty": "N/A",
+        "error": "System error state with retry."
+      },
+      "layout": "Dense but airy. Grid of metric cards at the top. Below, a tabbed interface for Users, Shops, and Products utilizing single-column lists with subtle dividers and prominent status badges."
+    }
+  ],
+  "images": {
+    "hero_bouquet_1": {
+      "url": "https://images.unsplash.com/photo-1561848355-890d054dc55a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHw0fHxlbGVnYW50JTIwZmxvcmFsJTIwYm91cXVldCUyMGFycmFuZ2VtZW50fGVufDB8fHx8MTc5MDEzODI0N3ww&ixlib=rb-4.1.0&q=85",
+      "alt": "Elegant white and beige floral arrangement"
+    },
+    "hero_bouquet_2": {
+      "url": "https://images.unsplash.com/photo-1523693916903-027d144a2b7d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MTN8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwZmxvcmFsJTIwYm91cXVldCUyMGFycmFuZ2VtZW50fGVufDB8fHx8MTc5MDEzODI0N3ww&ixlib=rb-4.1.0&q=85",
+      "alt": "Pink and white rose bouquet"
+    },
+    "hero_bouquet_3": {
+      "url": "https://images.pexels.com/photos/20278829/pexels-photo-20278829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "Colorful bouquet featuring pink roses and daisies"
+    },
+    "shop_interior_1": {
+      "url": "https://images.unsplash.com/photo-1771856558087-80f35365c3bb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwzfHxmbG93ZXIlMjBzaG9wJTIwaW50ZXJpb3IlMjBzdG9yZWZyb250fGVufDB8fHx8MTc5MDEzODI0N3ww&ixlib=rb-4.1.0&q=85",
+      "alt": "Vibrant display of fresh flowers in a shop"
+    },
+    "shop_interior_2": {
+      "url": "https://images.pexels.com/photos/6720583/pexels-photo-6720583.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "alt": "Florist assisting a customer inside a vibrant flower shop"
+    }
+  },
+  "haptics": {
+    "tab_press": "light",
+    "add_to_cart": "medium",
+    "3d_item_select": "light",
+    "order_status_change": "success"
+  },
+  "instructions_to_main_agent": [
+    "Ensure strict adherence to the Editorial Mobile LIGHT personality: rely on generous whitespace and typography for grouping rather than heavy cards or shadows.",
+    "Use Cormorant Garamond for all primary headings and Geist for body, UI labels, and data points.",
+    "The 3D Bouquet Studio using expo-gl/three MUST handle the canvas efficiently. The 3D scene should occupy the upper portion of the screen with a frosted glass or clean solid surface secondary sheet layered over the bottom for the selection UI.",
+    "For the Customer app, utilize the gradient-to-dark scrim pattern (Layer 0 image -> Layer 1 vertical gradient -> Layer 2 text) for all hero imagery to ensure readability.",
+    "Distinct Role Routing: Set up the router to handle /customer, /owner, and /admin namespaces clearly. Each should have its own dedicated _layout with distinct bottom tabs.",
+    "Implement Google Maps for delivery tracking in the customer order flow, utilizing a floating glass card for status and a bottom sheet for driver details.",
+    "Provide clear data-testID attributes on all interactive elements (buttons, inputs, tabs) for reliable testing.",
+    "No indigo, blue, or purple colors. Rely strictly on the defined pastel ivory/blush base and rich burgundy brand accents."
+  ]
+}

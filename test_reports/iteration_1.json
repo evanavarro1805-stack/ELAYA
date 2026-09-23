@@ -1,0 +1,44 @@
+{
+  "summary": "Backend-only testing for Elaya (FastAPI + MongoDB). Wrote pytest suite covering health, auth, RBAC, products, owner CRUD, orders + status pipeline, admin overview & user/shop toggle, and favorites. 27/27 tests passing against public URL https://elaya-role-dispatch.preview.emergentagent.com. Seeded data present (4 users, 2 shops, ~14 products) and working. No backend bugs found for the requested scope. Two initial test-side issues (email lowercasing, xdist parallel ordering) were fixed inside the tests, not the app.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "/api/admin/users/{id}/status & /api/admin/shops/{id}/status", "issue": "new_status is accepted as a raw query string with no whitelist validation — passing arbitrary values (e.g. 'foo') would be persisted. Consider Literal['active','disabled']."},
+      {"endpoint": "/api/orders/{oid}", "issue": "HTTPException(403) is raised without a detail message for cross-customer / cross-owner access. Works, but a message helps clients."},
+      {"endpoint": "Auth", "issue": "JWT_SECRET in backend/.env is a placeholder ('change-me-in-production-2026'). Fine for preview, must be rotated for prod."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [],
+    "react_native_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/conftest.py",
+    "/app/backend/tests/test_elaya_backend.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Optional: constrain admin status endpoints (users/shops) with a Literal enum to reject invalid status values.",
+    "Optional: rotate JWT_SECRET before any production deployment.",
+    "Optional: server.py uses deprecated FastAPI @app.on_event('startup'/'shutdown') — migrate to lifespan handlers when convenient (not blocking).",
+    "Note: frontend/.env exposes EXPO_PUBLIC_BACKEND_URL (not EXPO_BACKEND_URL) — ensure frontend reads process.env.EXPO_PUBLIC_BACKEND_URL when frontend testing begins."
+  ],
+  "critical_code_review_comments": [
+    "server.py is a single ~420-line file — acceptable now, but split into routers (auth/products/orders/admin) once features grow past ~700 lines.",
+    "All endpoints correctly strip MongoDB _id via projection {'_id': 0}; register/register-owner insert paths also pop _id — good.",
+    "RBAC via require() dependency is clean and consistently applied.",
+    "Order status update endpoint does not enforce a forward-only state machine — an owner can move an order from 'completed' back to 'pending'. Consider validating transitions."
+  ],
+  "updated_files": [
+    "/app/backend/tests/conftest.py (new)",
+    "/app/backend/tests/test_elaya_backend.py (new)"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "not tested (backend-only request)"},
+  "seed_data_creation": "Tests create ephemeral TEST_* users, products, and orders via the API. No manual DB seeding required — startup seed() populates admin/customer/2 owners/2 shops/~14 products.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Backend is stable at https://elaya-role-dispatch.preview.emergentagent.com. Run: cd /app/backend/tests && pytest -v -n 0 (xdist parallel is enabled by default in pytest.ini via loadscope — pass -n 0 for deterministic order because TestOrders and TestAdmin share state through pytest attribute globals). Credentials in /app/memory/test_credentials.md are correct. Frontend uses EXPO_PUBLIC_BACKEND_URL env var. When testing frontend, verify role-based redirect after login (customer→marketplace, flower_owner→owner dashboard, admin→admin dashboard) and Shopee-style bottom sheet login UI.",
+  "rca_of_issue": "N/A — no product bugs. Two test failures on the first run were caused by (1) server lowercasing emails on register/login (correct behaviour) vs the test asserting original casing, and (2) pytest-xdist LoadScopeScheduling running TestAdmin on a different worker than TestOrders, so the completed_orders>=1 assertion race-conditioned. Both were fixed in the test file."
+}
